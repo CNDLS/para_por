@@ -189,7 +189,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		.animate({ "top": this.boatContainer.height() }, 3500, function () { dfd.resolve(); });
 		return dfd.promise();
 	},
-	
+//testing	
 	playerSwimsBack: function () {
 		var dfd = $.Deferred();
 		
