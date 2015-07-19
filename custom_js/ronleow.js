@@ -120,7 +120,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 	
 	addGas: function (fill_to) {
 		var current_transform, current_rotation, step;
-		var _this = this;
+		var dfd = $.Deferred();
 		
 		// show the gas tank above the back end of the boat.
 		this.gas_tank.show();
@@ -138,8 +138,8 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 			step = 4.5;
 			// if fill_to, fill to that number of steps
 			var final_r = fill_to ? (fill_to * step) - 45 : current_rotation + step;
-			
-			var dfd = $.Deferred();
+
+			var _this = this;
 			$({ r: current_rotation }).delay(250).animate({ r: final_r }, 
 				{ duration: 1000, 
 					step: function (now) {
@@ -153,6 +153,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 				})
 		} catch (e) {
 			this.gas_tank.hide();
+			console.warn(e);
 		}
 		return dfd.promise();
 	},
