@@ -21,22 +21,21 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 			switch (evt.charCode) {
 				case 35: // # sign.
 					// jump to round 18 (17th index).
-					round.abort(round.game.rounds[17], Game.clearCards);
-					round.game.round_nbr = round.nbr = 18;
-					round.game.setPoints(17);
 					_this.addGas(17).then(function () {
 						_this.gas_tank.hide();
+						round.game.setPoints(17);
+						round.abort(round.game.rounds[17], Game.clearCards);
 					});
 			}
 		})
 	},
 	
-	leaveEvaluateResponse: function (evt, info) {
+	leaveListenForPlayer: function (evt, info) {
 		var game = this.game;
 		var round = info.round;
 		var responder = round.responder;
-		var answer = responder.answer;
-		var score = responder.score;
+		var answer = info.args[0];
+		var score = info.args[1];
 		var current_score = game.current_score || 0;
 		
 
@@ -46,6 +45,13 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		var playerSwimsBack = this.playerSwimsBack.bind(this);
 		var celebrateAtFarShore = this.celebrateAtFarShore.bind(this);
 		var goToBonusRounds = this.goToBonusRounds.bind(this);
+		var goBackToRoundOne = this.goBackToRoundOne.bind(this);
+		var endGame = function () {
+			var dfd = $.Deferred();
+			game.end();
+			dfd.resolve();
+			return dfd.promise();
+		}
 		
 		// give the boat gas when there is a correct answer.
 		// this happens regardless of round (even if bonus round).
@@ -58,23 +64,25 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 				
 			case 1:
 				add_gas_promise = this.addGas();
+				info.continue = false;
 				break;
 		}	
 
 		// on last round, check final score
-		var endGame = game.end.bind(game);
 		if (round.nbr === this.last_regular_round_nbr) {
 			// clean up prompt.
 			round.prompter.discardAll();
 				
 			if (current_score < 18) {
 				// if final score < 18, you lose
-				add_gas_promise.then(playerDrivesBoat).then(boatSinks).then(playerSwimsBack).then(endGame);
+				add_gas_promise.then(playerDrivesBoat).then(boatSinks).then(playerSwimsBack).then(goBackToRoundOne);
 				info.continue = false;
+				
 			} else if (current_score < 20) {
 				// give two bonus questions
 				add_gas_promise.then(goToBonusRounds);
 				info.continue = false;
+				
 			} else if (current_score === 20) { // condition is spurious at this point.
 				// must be a winner! got 20 right; straight through.
 				game.user_won = true;
@@ -94,11 +102,16 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 				info.continue = false;
 			} else {
 				// player lost.
-				add_gas_promise.then(playerDrivesBoat).then(boatSinks).then(playerSwimsBack).then(endGame);
+				add_gas_promise.then(playerDrivesBoat).then(boatSinks).then(playerSwimsBack).then(goBackToRoundOne);
 				info.continue = false;
 			}
 			
-		}
+		} else if (score == 1) {
+				// move the round forward once done.
+				add_gas_promise.then(function () {
+					round.transition();
+				})
+			}
 	},
 	
 	/*** Utility Animations. 
@@ -132,21 +145,26 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 					step: function (now) {
 				  	_this.needle.attr("transform", "rotate(" + now + ",210,312)");
 						// waiting for promise doesn't seem to work with this form of animate().
-						if (now === current_rotation + step) {
+						if (now === final_r) {
 							_this.gas_tank.hide();
+							dfd.resolve();
 						}
 					}
 				})
 		} catch (e) {
 			this.gas_tank.hide();
-		} finally {
-			dfd.resolve();
 		}
 		return dfd.promise();
 	},
 	
 	goToBonusRounds: function () {
 		this.game.newRound(21);
+		return game.internal_clock.nextTick();
+	},
+	
+	goBackToRoundOne: function () {
+		this.game.newRound(1);
+		return game.internal_clock.nextTick();
 	},
 	
 	playerDrivesBoat: function () {
@@ -189,7 +207,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		.animate({ "top": this.boatContainer.height() }, 3500, function () { dfd.resolve(); });
 		return dfd.promise();
 	},
-//testing	
+
 	playerSwimsBack: function () {
 		var dfd = $.Deferred();
 		
