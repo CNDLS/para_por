@@ -97,7 +97,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 			// clean up prompt.
 			round.prompter.discardAll();
 			
-			if (current_score === 20) {
+			if (current_score >= 20) {
 				// player won!
 				game.user_won = true;
 				add_gas_promise.then(playerDrivesBoat).then(celebrateAtFarShore).then(endGame);
@@ -161,12 +161,17 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 	},
 	
 	goToBonusRounds: function () {
-		this.game.newRound(21);
-		return game.internal_clock.nextTick();
+		var dfd = $.Deferred();
+		var game = this.game;
+		game.current_round.transition.cancel();
+		this.game.internal_clock.nextTick().then(function () {
+			game.current_round.abort(game.rounds[20], game.clearCards);
+			dfd.resolve();
+		})
+		return dfd;
 	},
 	
 	goBackToRoundOne: function () {
-		// var dfd = $.Deferred();
 		var _this = this;
 		this.addGas(0).then(function () {
 			_this.gas_tank.hide();
@@ -187,10 +192,11 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		var boat_start_pos = this.boat.position().left;
 		var boat_nudge = this.boat.width() / 2.0;
 		var move_increment = (this.boatContainer.width() - this.boat.width()) / 20;
-		var boat_end_pos = (this.game.current_score) ? (move_increment * this.game.current_score) : boat_nudge;
+		var boat_trip_length = Math.min(this.game.current_score, 20);
+		var boat_end_pos = (boat_trip_length) ? (move_increment * boat_trip_length) : boat_nudge;
 		var boat_speed = move_increment * 20;
 		var boat_min_duration = 400; // ticks
-		var boat_run_duration = (boat_speed * this.game.current_score) + boat_min_duration;
+		var boat_run_duration = (boat_speed * boat_trip_length) + boat_min_duration;
 		
 		this.boat
 		.delay(500)
@@ -202,10 +208,11 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 
 		// convert matched rotation to a float.
 		current_rotation = parseFloat(current_rotation[1]);
+		var end_rotation = (this.game.current_score == 21) ? -40.5: -45;
 		var _this = this;
 		$({ r: current_rotation })
 		.delay(500)
-		.animate({ r: -45 }, 
+		.animate({ r: end_rotation }, 
 						{ duration: boat_run_duration, 
 							step: function (now) {
 						  	_this.needle.attr("transform", "rotate(" + now + ",210,312)");

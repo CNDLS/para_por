@@ -1,5 +1,5 @@
 Title: Para or Por?
-WinningScore: 20
+WinningScore: 21
 Scenes:
   - scene_type: Lake
     rounds: all
@@ -20,7 +20,7 @@ WidgetContainer: div#boat_dashboard
 Templates:
   - &EMBEDDED_LINKS_ROUND
     Listener: PromptLinkListener
-    MaxTime: 60
+    MaxTime: 6
     Teardown:
       call: clearCards
   - &PARA_POR_LINKS
@@ -263,7 +263,10 @@ Rounds:
       - content: Para
         feedback: "It is Por<br>(in exchange) for"
   # Just do the 'bonus rounds' (and their intro) as additional rounds.
-  - Prompt:
+  - Prompter:
+      type: Prompter
+      accept_user_input: each
+    Prompt:
     - prompt_type: Modal
       content: "¡Oops!  Necesitas 20 galones para poder salvarte y llegar a la Ciudad de Granada sano/a y salvo/a.  ¡Ay!  Aquí vienen los tiburones que van a comerte. Pero, espera un momento, tienes una oportunidad de ganar crédito suplementario (dos galones): ¡Completa estas dos oraciones muy rápido!"
     Listener: none
