@@ -6,6 +6,8 @@
 Game.Scene.new(Game.Scene.Basic, "Lake", 
 {
 	finalize: function (round) {
+		round.scene = this;
+		
 		// keep references to my set pieces.
 		this.swimmer = $("#swimmer");
 		this.boatContainer = $("#boat-container");
@@ -30,12 +32,12 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		})
 	},
 	
-	leaveListenForPlayer: function (evt, info) {
+	leaveRespondToPlayer: function (evt, info) {
 		var game = this.game;
 		var round = info.round;
 		var responder = round.responder;
-		var answer = info.args[0];
-		var score = info.args[1];
+		var answer = responder.answer;
+		var score = responder.score;
 		var current_score = game.current_score || 0;
 		
 
@@ -164,8 +166,19 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 	},
 	
 	goBackToRoundOne: function () {
-		this.game.newRound(1);
-		return game.internal_clock.nextTick();
+		// var dfd = $.Deferred();
+		var _this = this;
+		this.addGas(0).then(function () {
+			_this.gas_tank.hide();
+			_this.game.setPoints(0);
+			_this.swimmer.remove();
+			_this.boatContainer.render("#boat");
+			// cancel the current transition, abort from this round to the first one.
+			_this.game.current_round.transition.cancel();
+			_this.blackBackdrop.animate({ opacity: 0 }, 500, function () {
+				_this.game.current_round.abort(_this.game.rounds[0], _this.game.clearCards);
+			});
+		});
 	},
 	
 	playerDrivesBoat: function () {
@@ -214,6 +227,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		
 		var boat_sink_pos = this.boat.position();
 		var swim_duration = boat_sink_pos.left * 20;
+		var swimmer_top = 13;
 		// if there were no correct answers, boat_sink_pos.left is 37.5, and swim_duration is 750.
 		
 		this.boat.remove();
@@ -222,17 +236,17 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		this.swimmer.show();
 		
 		if (swim_duration > 750) {
-			this.swimmer.animate({ top: 10 }, 200 ); // bring swimmer partially to the surface.
-			this.swimmer.animate({ left: 20 }, swim_duration, function () { dfd.resolve(); } );
+			this.swimmer.animate({ top: swimmer_top }, 200 ); // bring swimmer partially to the surface.
+			this.swimmer.animate({ left: 20 }, swim_duration );
 		} else {
 			// if there is not enough room for the swimmer to swim, just bring him to the surface and then move on.
-			this.swimmer.animate({ top: 10 }, 200, function () { dfd.resolve(); } );
+			this.swimmer.animate({ top: swimmer_top }, 200 );
 		}
 		
 		
 		// fade to black, so we don't have to deal with the swimmer coming out of the water.
 		var fadeout_delay = (swim_duration >= 6000) ? (swim_duration - 6000) : 0;
-		this.blackBackdrop.delay(fadeout_delay).animate({ opacity: 1 }, 2500);
+		this.blackBackdrop.delay(fadeout_delay).animate({ opacity: 1 }, 2000, function () { dfd.resolve(); });
 		
 		return dfd.promise();
 	},
