@@ -8,7 +8,6 @@ Scenes:
     - div#blackBackdrop
     - div#justSky: div#scrim
     - div#notSky
-    - div
     - img#gas_tank[src=gas_tank.png]
     - div#boat-container: div#boat
     - div#swimmer
@@ -17,6 +16,9 @@ Widgets:
   - CountdownClock
   - Scoreboard
 WidgetContainer: div#boat_dashboard
+WonGameFeedback:
+  h3: "¡EXCELENTE!"
+  p: ¡Llegaste a la Ciudad de Granada sano/a y salvo/a!
 Templates:
   - &EMBEDDED_LINKS_ROUND
     Listener: PromptLinkListener
@@ -51,6 +53,7 @@ Rounds:
     Answers:
       - content: Por
         feedback: "It is Para<br>purpose (in order to + infinitive)"
+        timeout_answer: true
       - content: Para
         correct: true
   - << : *EMBEDDED_LINKS_ROUND #q2
