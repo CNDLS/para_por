@@ -272,3 +272,11 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 	}
 	 
 });
+
+
+Game.Scene.new(Game.Scene.Basic, "Quiz",
+{
+	finalize: function (round) {
+		round.game.clearCards();
+	}
+});

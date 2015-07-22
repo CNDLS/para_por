@@ -24,7 +24,7 @@ pre.scroll {
     border: 3px solid #BC8F8F;
 }
 
-.backdrop {
+.backdrop.lake {
     height: 26.7vw;
     width: 100vw;
     /*background: url("../custom_img/lake-bg.png") no-repeat;*/
@@ -34,6 +34,26 @@ pre.scroll {
     position: relative;
     margin: 0 auto 1.2vh;
     position: relative;
+}
+
+.backdrop.quiz {
+    width: 100vw;
+    height: 1600px;
+    position: absolute;
+    background: url("../custom_img/clipboard.svg");
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center top;
+    text-align: center;
+}
+
+.backdrop.quiz .card.prompt.simple {
+    width: 50vw;
+    text-align: left;
+    margin: 240px auto;
+}
+.backdrop.quiz .card.prompt.simple h1 {
+  text-align: center;
 }
 
 #justSky {

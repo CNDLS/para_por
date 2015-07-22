@@ -2,7 +2,7 @@ Title: Para or Por?
 WinningScore: 21
 Scenes:
   - scene_type: Lake
-    rounds: all
+    rounds: [1..23]
     backdrop: div
     set_pieces:
     - div#blackBackdrop
@@ -12,6 +12,8 @@ Scenes:
     - div#boat-container: div#boat
     - div#swimmer
     - svg#gauge[src=gauge.svg]
+  - scene_type: Quiz
+    rounds: [24]
 Widgets:
   - CountdownClock
   - Scoreboard
@@ -296,3 +298,11 @@ Rounds:
         feedback: "It is Para<br>Destination (place) (Engl. “for”)"
       - content: Para
         correct: true
+  - Prompt:
+      container: .backdrop.quiz
+      content:
+        h1: "Una pruebecita"
+        p: "Ahora, una pruebecita.  Vamos a ver si aprendiste muy bien los usos de por y para.  ¿Cuál de las dos preposiciones, en tu opinión, es apropiada para las siguientes razones?"
+    Listener:
+      type: Listener
+      container: .backdrop.quiz
