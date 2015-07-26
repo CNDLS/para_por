@@ -8,10 +8,10 @@ Scenes:
     - div#blackBackdrop
     - div#justSky: div#scrim
     - div#notSky
-    - img#gas_tank[src=gas_tank.png]
+    - img#gas_tank[src=MEDIA_URL+uploads/custom_img/gas_tank.png]
     - div#boat-container: div#boat
     - div#swimmer
-    - svg#gauge[src=gauge.svg]
+    - svg#gauge[src=MEDIA_URL+uploads/custom_img/gauge.svg]
   - scene_type: Quiz
     rounds: [24]
 Widgets:

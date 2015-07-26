@@ -1,7 +1,7 @@
 /*
-* Game.Scene.Lake: controls animations for gas gauge, sharks, and other moving things.
-* To keep things simple, we treat the characters as set pieces that get moved about.
-*/
+ * Game.Scene.Lake: controls animations for gas gauge, sharks, and other moving things.
+ * To keep things simple, we treat the characters as set pieces that get moved about.
+ */
 
 Game.Scene.new(Game.Scene.Basic, "Lake", 
 {
@@ -16,6 +16,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		this.needle = $("svg path#needle");
 		this.gas_tank = $("#gas_tank");
 		this.last_regular_round_nbr = 20;
+		this.quiz_round_nbr = 24;
 		
 		// add a cheat key.
 		var _this = this;
@@ -48,12 +49,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		var celebrateAtFarShore = this.celebrateAtFarShore.bind(this);
 		var goToBonusRounds = this.goToBonusRounds.bind(this);
 		var goBackToRoundOne = this.goBackToRoundOne.bind(this);
-		var endGame = function () {
-			var dfd = $.Deferred();
-			game.end();
-			dfd.resolve();
-			return dfd.promise();
-		}
+		var endGame = this.endGame.bind(this);
 		
 		// give the boat gas when there is a correct answer.
 		// this happens regardless of round (even if bonus round).
@@ -100,13 +96,17 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 			if (current_score >= 20) {
 				// player won!
 				game.user_won = true;
-				add_gas_promise.then(playerDrivesBoat).then(celebrateAtFarShore).then(endGame);
+				add_gas_promise.then(playerDrivesBoat).then(celebrateAtFarShore).then(goToQuiz);
 				info.continue = false;
 			} else {
 				// player lost.
 				add_gas_promise.then(playerDrivesBoat).then(boatSinks).then(playerSwimsBack).then(goBackToRoundOne);
 				info.continue = false;
 			}
+			
+		} else if (round.nbr === this.quiz_round_nbr) {
+			info.continue = false;
+			return endGame();
 			
 		} else if (score == 1) {
 				// move the round forward once done.
@@ -269,14 +269,27 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		});
 		
 		return dfd.promise();
+	},
+	
+	goToQuiz: function () {
+		this.game.current_round.abort(_this.game.rounds[23], _this.game.clearCards);
+	},
+
+	endGame: function () {
+		var dfd = $.Deferred();
+		game.end();
+		dfd.resolve();
+		return dfd.promise();
 	}
 	 
 });
 
 
+/*
+ * Game.Scene.Quiz: this is where .
+ */
 Game.Scene.new(Game.Scene.Basic, "Quiz",
 {
 	finalize: function (round) {
-		round.game.clearCards();
 	}
 });
