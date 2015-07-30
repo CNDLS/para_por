@@ -265,8 +265,12 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 										opacity: 1
 									}, 1500, function () {
 			scrim.css("background-image", "../custom_img/fireworks.gif");
+			// do a little color-cycling animation on the fireworks, just to show off.
+			scrim.addClass("magenta_fireworks");
 			dfd.resolve();
 		});
+		// darken the landscape a bit. 'night' class css should have a transition.
+		$("#notSky").addClass("night");
 		
 		return dfd.promise();
 	},
