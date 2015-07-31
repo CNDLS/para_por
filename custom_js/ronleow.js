@@ -22,12 +22,19 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		var _this = this;
 		$(document).keypress(function (evt) {
 			switch (evt.charCode) {
-				case 35: // # sign.
+				case 35: // # sign. shift-3.
 					// jump to round 18 (17th index).
 					_this.addGas(17).then(function () {
 						_this.gas_tank.hide();
 						round.game.setPoints(17);
 						round.abort(round.game.rounds[17], Game.clearCards);
+					});
+					
+				case 36: // $ sign. shift-4.
+					_this.addGas(19).then(function () {
+						_this.gas_tank.hide();
+						round.game.setPoints(19);
+						round.abort(round.game.rounds[19], Game.clearCards);
 					});
 			}
 		})
@@ -49,6 +56,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		var celebrateAtFarShore = this.celebrateAtFarShore.bind(this);
 		var goToBonusRounds = this.goToBonusRounds.bind(this);
 		var goBackToRoundOne = this.goBackToRoundOne.bind(this);
+		var goToQuiz = this.goToQuiz.bind(this);
 		var endGame = this.endGame.bind(this);
 		
 		// give the boat gas when there is a correct answer.
@@ -84,7 +92,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 			} else if (current_score === 20) { // condition is spurious at this point.
 				// must be a winner! got 20 right; straight through.
 				game.user_won = true;
-				add_gas_promise.then(playerDrivesBoat).then(celebrateAtFarShore).then(endGame);
+				add_gas_promise.then(playerDrivesBoat).then(celebrateAtFarShore).then(goToQuiz);
 				info.continue = false;
 			}
 			
@@ -261,14 +269,12 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 	celebrateAtFarShore: function () {
 		var dfd = $.Deferred();
 		var scrim = $("#scrim");
-		scrim.animate({
-										opacity: 1
-									}, 1500, function () {
-			scrim.css("background-image", "../custom_img/fireworks.gif");
-			// do a little color-cycling animation on the fireworks, just to show off.
-			scrim.addClass("magenta_fireworks");
-			dfd.resolve();
-		});
+		scrim.animate({ opacity: 1 }, 2500, function () {
+																					scrim.css("background-image", "../custom_img/fireworks.gif");
+																					// do a little color-cycling animation on the fireworks, just to show off.
+																					scrim.addClass("magenta_fireworks");
+																					setTimeout(dfd.resolve, 12500);
+																				});
 		// darken the landscape a bit. 'night' class css should have a transition.
 		$("#notSky").addClass("night");
 		
@@ -276,7 +282,8 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 	},
 	
 	goToQuiz: function () {
-		this.game.current_round.abort(_this.game.rounds[23], _this.game.clearCards);
+		this.game.current_round.transition.cancel();
+		this.game.current_round.abort(this.game.rounds[23], this.game.clearCards);
 	},
 
 	endGame: function () {
