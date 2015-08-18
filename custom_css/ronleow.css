@@ -61,24 +61,29 @@ pre.scroll {
   text-align: center;
 }
 
-.backdrop.quiz ul.multiple_choice_card {
+.backdrop.quiz ul {
   list-style: none;
   margin: 0 auto;
-  width: 680px;
+  width: 45em;
   font-size: 1.45em;
   clear: both;
 }
-.backdrop.quiz ul.multiple_choice_card li {
-  float: right;
-  margin: 12px 16px;
+.backdrop.quiz ul.header li {
+  margin: 0 0.7em;
+  white-space: nowrap;
 }
-.backdrop.quiz ul.multiple_choice_card li.prompt {
+  
+.backdrop.quiz ul li {
+  float: right;
+  margin: 0.65em 1em;
+}
+.backdrop.quiz ul li.prompt {
   text-align: left;
-  width: 480px;
+  width: 25em;
   float: left;
 }
 
-.backdrop.quiz ul.multiple_choice_card li label {
+.backdrop.quiz ul li label {
   display:none;
 }
 
@@ -227,22 +232,14 @@ p.intro {
     left: 45%;  
 }
 
-.grouped_input_card div:first-child {
-  width: 44%;
-  text-align: right;
-  margin: 0 auto;
-}
-
-.grouped_input_card div:first-child span {
-  display: inline-block;
-  width: 2em;
-  margin: 1em;
-  text-align: center;
-}
-
 .submit_container {
   margin: 6em auto 0;
-  width: 30vw;
+  width: 45em;
+}
+
+.submit_container button {
+  left: 5em;
+  position: relative;
 }
 
 /******************************************************************************

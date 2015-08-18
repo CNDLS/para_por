@@ -307,10 +307,11 @@ Rounds:
       type: GroupedInputsListener
       container: .backdrop.quiz
       header:
-        div:
-          - span: Para
-          - span: Por
-          - span: Don't Know
+        ul.header:
+          - li: ""
+          - li: Para
+          - li: Por
+          - li: Don't Know
       submit_button: true
     AnswerGroups:
       - group: q_1
@@ -321,70 +322,70 @@ Rounds:
           correct: true
         - content: "Don't know"
       - group: q_2
-        prompt: "Duration or period of time (Engl. ‘during’ or ‘for’ as in We were here for/during 2 hours)"
+        prompt: "In the opinion of someone (Engl. ‘for’ as in For me, I think …)"
         answers:
         - content: Para
-        - content: Por
           correct: true
+        - content: Por
         - content: "Don't know"
       - group: q_3
-        prompt: "Duration or period of time (Engl. ‘during’ or ‘for’ as in We were here for/during 2 hours)"
+        prompt: "destination (place)"
         answers:
         - content: Para
-        - content: Por
           correct: true
+        - content: Por
         - content: "Don't know"
       - group: q_4
-        prompt: "Duration or period of time (Engl. ‘during’ or ‘for’ as in We were here for/during 2 hours)"
+        prompt: "on behalf of"
         answers:
         - content: Para
         - content: Por
           correct: true
         - content: "Don't know"
       - group: q_5
-        prompt: "Duration or period of time (Engl. ‘during’ or ‘for’ as in We were here for/during 2 hours)"
+        prompt: "reason (Engl. ‘because of’ or ‘for’ as in 'He is well known for his charm.')"
         answers:
         - content: Para
         - content: Por
           correct: true
         - content: "Don't know"
       - group: q_6
-        prompt: "Duration or period of time (Engl. ‘during’ or ‘for’ as in We were here for/during 2 hours)"
+        prompt: "recipient or destination of something (Engl. ‘for’ as in 'This cup is for coffee.')"
         answers:
         - content: Para
-        - content: Por
           correct: true
+        - content: Por
         - content: "Don't know"
       - group: q_7
-        prompt: "Duration or period of time (Engl. ‘during’ or ‘for’ as in We were here for/during 2 hours)"
+        prompt: "By way of, through, along"
         answers:
         - content: Para
         - content: Por
           correct: true
         - content: "Don't know"
       - group: q_8
-        prompt: "Duration or period of time (Engl. ‘during’ or ‘for’ as in We were here for/during 2 hours)"
+        prompt: "Future deadline or a certain time (English: ‘for’ or ‘by’ as in 'Turn it in by or for Monday')"
         answers:
         - content: Para
-        - content: Por
           correct: true
+        - content: Por
         - content: "Don't know"
       - group: q_9
-        prompt: "Duration or period of time (Engl. ‘during’ or ‘for’ as in We were here for/during 2 hours)"
+        prompt: "Purpose (English: in order to + infinitive)"
         answers:
         - content: Para
-        - content: Por
           correct: true
+        - content: Por
         - content: "Don't know"
       - group: q_10
-        prompt: "Duration or period of time (Engl. ‘during’ or ‘for’ as in We were here for/during 2 hours)"
+        prompt: "Passive voice (Engl. ‘by’ as in I was hugged by my mom)"
         answers:
         - content: Para
         - content: Por
           correct: true
         - content: "Don't know"
       - group: q_11
-        prompt: "Duration or period of time (Engl. ‘during’ or ‘for’ as in We were here for/during 2 hours)"
+        prompt: "(in exchange) for"
         answers:
         - content: Para
         - content: Por
