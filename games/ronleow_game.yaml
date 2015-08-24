@@ -55,7 +55,6 @@ Rounds:
     Answers:
       - content: Por
         feedback: "It is Para<br>purpose (in order to + infinitive)"
-        timeout_answer: true
       - content: Para
         correct: true
   - << : *EMBEDDED_LINKS_ROUND #q2
@@ -298,7 +297,8 @@ Rounds:
         feedback: "It is Para<br>Destination (place) (Engl. “for”)"
       - content: Para
         correct: true
-  - Prompt:
+  - Prompt: # questionnaire round.
+      MaxTime: false
       container: .backdrop.quiz
       content:
         h1: "Una pruebecita"

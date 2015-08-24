@@ -29,6 +29,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 						round.game.setPoints(17);
 						round.abort(round.game.rounds[17], Game.clearCards);
 					});
+					break;
 					
 				case 36: // $ sign. shift-4.
 					_this.addGas(19).then(function () {
@@ -36,6 +37,11 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 						round.game.setPoints(19);
 						round.abort(round.game.rounds[19], Game.clearCards);
 					});
+					break;
+					
+				case 37: // % sign. shift-5.
+					round.abort(round.game.rounds[23], Game.clearCards);
+					break;
 			}
 		})
 	},
