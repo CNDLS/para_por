@@ -64,8 +64,8 @@ pre.scroll {
 .backdrop.quiz ul {
   list-style: none;
   margin: 0 auto;
-  width: 45em;
-  font-size: 1.45em;
+  width: 55vw;
+  font-size: 1.25vw;
   clear: both;
 }
 .backdrop.quiz ul.header li {
@@ -79,7 +79,7 @@ pre.scroll {
 }
 .backdrop.quiz ul li.prompt {
   text-align: left;
-  width: 25em;
+  width: 30vw;
   float: left;
 }
 
@@ -238,7 +238,7 @@ p.intro {
 }
 
 .submit_container button {
-  left: 5em;
+  left: 0vw;
   position: relative;
 }
 
