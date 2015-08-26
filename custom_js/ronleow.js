@@ -46,6 +46,65 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		})
 	},
 	
+	enterListenForPlayer: function (evt, info) {
+		if (info.round.nbr === this.quiz_round_nbr) {
+			try {
+				var listener = info.round.listener;
+				var listener_cards = listener.cards;
+				$(listener_cards).each(function () {
+					var card = this;
+					
+					var addEmoticon = function (input_evt, input_info) {
+						// once there is a click, don't allow more.
+						listener.deactivateCards(input_info.card);
+						var radio_btns = this.element.find("input");
+						$(radio_btns).each(function (i) {
+							if ($(this).is(":checked")) {
+								var input_is_correct = $(card.history).select(function () {
+									return ((this.data instanceof Game.Answer) && (this.data.correct));
+								})[0];
+								if (input_is_correct) {
+									input_is_correct = input_is_correct.data.correct;
+								}
+								if (i === 2) { // "don't know" was clicked. highlight the correct answer.
+									var correct_btn;
+									for (var btn_id in card.radio_btns) {
+										var btn = card.radio_btns[btn_id];
+										if (btn.answer.correct || false) {
+											correct_btn = btn;
+											break;
+										}
+									}
+									$("#" + correct_btn.btn_id).addClass("v");
+								} else {
+									if (input_is_correct) {
+										$(this).addClass("s");
+									} else {
+										$(this).addClass("f");
+									}
+								}
+							} else {
+								$(this).removeClass("s f v");
+							}
+						});
+					}.bind(this);
+					this.element.on("Card.userInput", addEmoticon);
+				});
+			} catch (e) {
+				console.log("Could not track radio buttons in quiz.", e);
+			}
+		}
+		
+		// var rb_input = $("#" + clicked_radio_btn.btn_id);
+		// if (rb_input.is(":checked")) {
+		// 	if (correct) {
+		// 		rb_input.addClass("c");
+		// 	} else {
+		// 		rb_input.addClass("n");
+		// 	}
+		// }
+	},
+	
 	leaveRespondToPlayer: function (evt, info) {
 		var game = this.game;
 		var round = info.round;
@@ -120,6 +179,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 			
 		} else if (round.nbr === this.quiz_round_nbr) {
 			info.continue = false;
+			game.addPoints(1);
 			return endGame();
 			
 		} else if (score == 1) {

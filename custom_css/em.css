@@ -281,10 +281,10 @@ Win animation
 Quiz
 ******************************************************************************/
 .multiple_choice_card input:after {
-  display: block;
   width: 1em;
   height: 1em;
   content: " ";
+  display: block;
   background-size: contain;
   background-repeat: no-repeat;
   margin-left: 0.875em;
@@ -295,9 +295,4 @@ Quiz
 }
 .multiple_choice_card input.f:after {
   background-image: url('../custom_img/frown.png');
-}
-
-.multiple_choice_card input.v {
-  -webkit-filter: sepia(1) hue-rotate(60deg) saturate(10);
-  filter: sepia(1) hue-rotate(60deg) saturate(10);
 }

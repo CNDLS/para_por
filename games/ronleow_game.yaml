@@ -311,6 +311,7 @@ Rounds:
           - li: Por
           - li: Don't Know
       submit_button: true
+      deactivate_cards: true
       require: all
     MaxTime: none
     AnswerGroups:
