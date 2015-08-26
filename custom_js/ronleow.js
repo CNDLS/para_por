@@ -17,6 +17,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		this.gas_tank = $("#gas_tank");
 		this.last_regular_round_nbr = 20;
 		this.quiz_round_nbr = 24;
+		this.sharkcontainer = $("#sharkcontainer");
 		
 		// add a cheat key.
 		var _this = this;
@@ -64,6 +65,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		var goBackToRoundOne = this.goBackToRoundOne.bind(this);
 		var goToQuiz = this.goToQuiz.bind(this);
 		var endGame = this.endGame.bind(this);
+		var sharksAppear = this.sharksAppear.bind(this);
 		
 		// give the boat gas when there is a correct answer.
 		// this happens regardless of round (even if bonus round).
@@ -79,6 +81,12 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 				info.continue = false;
 				break;
 		}	
+
+		// if round.nbr === 17, start sharks swimming.
+		// testing on round.nbr === 2
+		if (round.nbr === 2) {
+			sharksAppear();
+		}
 
 		// on last round, check final score
 		if (round.nbr === this.last_regular_round_nbr) {
@@ -276,11 +284,11 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		var dfd = $.Deferred();
 		var scrim = $("#scrim");
 		scrim.animate({ opacity: 1 }, 2500, function () {
-																					scrim.css("background-image", "../custom_img/fireworks.gif");
-																					// do a little color-cycling animation on the fireworks, just to show off.
-																					scrim.addClass("magenta_fireworks");
-																					setTimeout(dfd.resolve, 12500);
-																				});
+			scrim.css("background-image", "../custom_img/fireworks.gif");
+			// do a little color-cycling animation on the fireworks, just to show off.
+			scrim.addClass("magenta_fireworks");
+			setTimeout(dfd.resolve, 12500);
+		});
 		// darken the landscape a bit. 'night' class css should have a transition.
 		$("#notSky").addClass("night");
 		
@@ -297,6 +305,18 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		game.end();
 		dfd.resolve();
 		return dfd.promise();
+	},
+
+	sharksAppear: function () {
+		// find boat
+		console.log(this.boatContainer);
+		console.log(this.boat);
+
+
+
+		var shark1 = $("<div id='shark1' />");
+		this.sharkcontainer.append(shark1)
+		this.sharkcontainer.css("visibility", "visible");
 	}
 	 
 });
