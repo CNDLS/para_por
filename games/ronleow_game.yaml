@@ -3,7 +3,6 @@ WinningScore: 21
 Scenes:
   - scene_type: Lake
     rounds: [1..23]
-    backdrop: div
     set_pieces:
     - div#blackBackdrop
     - div#justSky: div#scrim
