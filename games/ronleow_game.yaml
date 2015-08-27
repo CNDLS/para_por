@@ -12,7 +12,8 @@ Scenes:
     - div#boat-container: div#boat
     - div#swimmer
     - svg#gauge[src=MEDIA_URL+uploads/custom_img/gauge.svg]
-    - div#sharkcontainer
+    - div#sharkcontainer1
+    - div#sharkcontainer2
   - scene_type: Quiz
     rounds: [24]
 Widgets:

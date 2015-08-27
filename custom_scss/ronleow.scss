@@ -286,37 +286,84 @@ Win animation
 /*****
 Sharks!
 *********************************************/
-#sharkcontainer {
+#sharkcontainer1 {
 	position: absolute;
-	width: 150px;
-	height: 50px;
+	width: 75px;
+	height: 25px;
 	left: 55vw;
 	top: 60%;
 	overflow: hidden;
 	visibility: hidden;
 }
 
+#sharkcontainer2 {
+  position: absolute;
+  width: 93.75px;
+  height: 31.25px;
+  left: 60vw;
+  top: 70%;
+  overflow: hidden;
+  visibility: hidden;
+}
+
 #shark1 {
+  position: absolute;
+  width: 18.75px;
+  height: 16.56px;
+  margin-top: 45.2px;
+  transform-origin: 200% center;
+  animation: sharkswimleft 6s linear 3;
+
+  &::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: url("../custom_img/shark_left.png");
+    background-size: cover;
+    animation: sharkswimleft 6s linear reverse 3;
+  }
+}
+
+#shark2 {
 	position: absolute;
-	width: 30px;
-	height: 26.5px;
-	margin-top: 73.5px;
+	width: 15px;
+	height: 13.25px;
+	margin-top: 36.75px;
 	transform-origin: 200% center;
-	animation: sharkswim 3s linear infinite;
+	animation: sharkswimright 4s linear 3;
 
 	&::before {
 		content: '';
 		position: absolute;
 		height: 100%;
 		width: 100%;
-		background: url("../custom_img/shark_left.png");
+		background: url("../custom_img/shark_right.png");
 		background-size: cover;
-		animation: sharkswim 3s linear reverse infinite;
+		animation: sharkswimright 4s linear reverse 3;
 	}
 }
 
-@-webkit-keyframes sharkswim {
+@-webkit-keyframes sharkswimleft {
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@-moz-keyframes sharkswimleft {
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@-webkit-keyframes sharkswimright {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@-moz-keyframes sharkswimright {
 	100% {
-		transform: rotate(-360deg);
+		transform: rotate(360deg);
 	}
 }
