@@ -27,15 +27,11 @@ Templates:
     Teardown:
       call: clearCards
   - &PARA_POR_LINKS
-    - "("
-    - !link
-      class: por
-      content: por
-    - "/"
-    - !link
-      class: para
-      content: para
-    - ")"
+    - (
+    - a.por: por
+    - /
+    - a.para: para
+    - )
 Intro:
   # content:
   - h1.introWelcome: "¡Aventurero/a, bienvenido/a a Nicaragua y a PARA y POR!"

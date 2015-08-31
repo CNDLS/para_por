@@ -40,6 +40,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 					break;
 					
 				case 37: // % sign. shift-5.
+					round.game.setPoints(20);
 					round.abort(round.game.rounds[23], Game.clearCards);
 					break;
 			}
