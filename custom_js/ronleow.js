@@ -17,6 +17,8 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		this.gas_tank = $("#gas_tank");
 		this.last_regular_round_nbr = 20;
 		this.quiz_round_nbr = 24;
+		this.sharkcontainer1 = $("#sharkcontainer1");
+		this.sharkcontainer2 = $("#sharkcontainer2");
 		
 		// add a cheat key.
 		var _this = this;
@@ -124,6 +126,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		var goBackToRoundOne = this.goBackToRoundOne.bind(this);
 		var goToQuiz = this.goToQuiz.bind(this);
 		var endGame = this.endGame.bind(this);
+		var sharksAppear = this.sharksAppear.bind(this);
 		
 		// give the boat gas when there is a correct answer.
 		// this happens regardless of round (even if bonus round).
@@ -139,6 +142,13 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 				info.continue = false;
 				break;
 		}	
+
+		// if round.nbr === 17, start sharks swimming.
+		// testing on round.nbr === 2
+		if (round.nbr >= 17) {
+			
+			sharksAppear(round.nbr);
+		}
 
 		// on last round, check final score
 		if (round.nbr === this.last_regular_round_nbr) {
@@ -310,6 +320,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		var boat_sink_pos = this.boat.position();
 		var swim_duration = boat_sink_pos.left * 20;
 		var swimmer_top = 13;
+		var sharksAppear = this.sharksAppear.bind(this);
 		// if there were no correct answers, boat_sink_pos.left is 37.5, and swim_duration is 750.
 		
 		this.boat.remove();
@@ -320,6 +331,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		if (swim_duration > 750) {
 			this.swimmer.animate({ top: swimmer_top }, 200 ); // bring swimmer partially to the surface.
 			this.swimmer.animate({ left: 20 }, swim_duration );
+			setTimeout(sharksAppear, 500);
 		} else {
 			// if there is not enough room for the swimmer to swim, just bring him to the surface and then move on.
 			this.swimmer.animate({ top: swimmer_top }, 200 );
@@ -337,11 +349,11 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		var dfd = $.Deferred();
 		var scrim = $("#scrim");
 		scrim.animate({ opacity: 1 }, 2500, function () {
-																					scrim.css("background-image", "../custom_img/fireworks.gif");
-																					// do a little color-cycling animation on the fireworks, just to show off.
-																					scrim.addClass("magenta_fireworks");
-																					setTimeout(dfd.resolve, 12500);
-																				});
+			scrim.css("background-image", "../custom_img/fireworks.gif");
+			// do a little color-cycling animation on the fireworks, just to show off.
+			scrim.addClass("magenta_fireworks");
+			setTimeout(dfd.resolve, 12500);
+		});
 		// darken the landscape a bit. 'night' class css should have a transition.
 		$("#notSky").addClass("night");
 		
@@ -358,6 +370,37 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		game.end();
 		dfd.resolve();
 		return dfd.promise();
+	},
+
+	sharksAppear: function (round_nbr) {
+
+		switch (round_nbr) {
+			case 18:
+				var shark1 = $("<div id='shark1' />");
+				this.sharkcontainer1.append(shark1);
+				this.sharkcontainer1.css("visibility", "visible");
+				break;
+			case 19:
+				var shark2 = $("<div id='shark2' />");
+				this.sharkcontainer2.append(shark2);
+				this.sharkcontainer2.css("visibility", "visible");
+				break;
+			case undefined:
+				var shark1 = $("<div id='shark1' />");
+				this.sharkcontainer1.append(shark1);
+				this.sharkcontainer1.css("visibility", "visible");
+				var shark2 = $("<div id='shark2' />");
+				this.sharkcontainer2.append(shark2);
+				this.sharkcontainer2.css("visibility", "visible");
+				break;
+			case 20:
+				this.sharkcontainer1.css("visibility", 'hidden');
+				this.sharkcontainer2.css("visibility", 'hidden');
+			default:
+				break;
+		}
+
+		
 	}
 	 
 });
