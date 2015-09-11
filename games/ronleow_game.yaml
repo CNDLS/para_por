@@ -7,10 +7,10 @@ Scenes:
     - div#blackBackdrop
     - div#justSky: div#scrim
     - div#notSky
-    - img#gas_tank[src=MEDIA_URL+uploads/custom_img/gas_tank.png]
+    - img#gas_tank[src=MEDIA_URL+custom_img/gas_tank.png]
     - div#boat-container: div#boat
     - div#swimmer
-    - svg#gauge[src=MEDIA_URL+uploads/custom_img/gauge.svg]
+    - svg#gauge[src=MEDIA_URL+custom_img/gauge.svg]
     - div#sharkcontainer1
     - div#sharkcontainer2
   - scene_type: Quiz
@@ -327,66 +327,66 @@ Rounds:
           correct: true
         - content: Por
         - content: "Don't know"
-      # - group: q_3
-      #   prompt: "destination (place)"
-      #   answers:
-      #   - content: Para
-      #     correct: true
-      #   - content: Por
-      #   - content: "Don't know"
-      # - group: q_4
-      #   prompt: "on behalf of"
-      #   answers:
-      #   - content: Para
-      #   - content: Por
-      #     correct: true
-      #   - content: "Don't know"
-      # - group: q_5
-      #   prompt: "reason (Engl. ‘because of’ or ‘for’ as in 'He is well known for his charm.')"
-      #   answers:
-      #   - content: Para
-      #   - content: Por
-      #     correct: true
-      #   - content: "Don't know"
-      # - group: q_6
-      #   prompt: "recipient or destination of something (Engl. ‘for’ as in 'This cup is for coffee.')"
-      #   answers:
-      #   - content: Para
-      #     correct: true
-      #   - content: Por
-      #   - content: "Don't know"
-      # - group: q_7
-      #   prompt: "By way of, through, along"
-      #   answers:
-      #   - content: Para
-      #   - content: Por
-      #     correct: true
-      #   - content: "Don't know"
-      # - group: q_8
-      #   prompt: "Future deadline or a certain time (English: ‘for’ or ‘by’ as in 'Turn it in by or for Monday')"
-      #   answers:
-      #   - content: Para
-      #     correct: true
-      #   - content: Por
-      #   - content: "Don't know"
-      # - group: q_9
-      #   prompt: "Purpose (English: in order to + infinitive)"
-      #   answers:
-      #   - content: Para
-      #     correct: true
-      #   - content: Por
-      #   - content: "Don't know"
-      # - group: q_10
-      #   prompt: "Passive voice (Engl. ‘by’ as in I was hugged by my mom)"
-      #   answers:
-      #   - content: Para
-      #   - content: Por
-      #     correct: true
-      #   - content: "Don't know"
-      # - group: q_11
-      #   prompt: "(in exchange) for"
-      #   answers:
-      #   - content: Para
-      #   - content: Por
-      #     correct: true
-      #   - content: "Don't know"
+      - group: q_3
+        prompt: "destination (place)"
+        answers:
+        - content: Para
+          correct: true
+        - content: Por
+        - content: "Don't know"
+      - group: q_4
+        prompt: "on behalf of"
+        answers:
+        - content: Para
+        - content: Por
+          correct: true
+        - content: "Don't know"
+      - group: q_5
+        prompt: "reason (Engl. ‘because of’ or ‘for’ as in 'He is well known for his charm.')"
+        answers:
+        - content: Para
+        - content: Por
+          correct: true
+        - content: "Don't know"
+      - group: q_6
+        prompt: "recipient or destination of something (Engl. ‘for’ as in 'This cup is for coffee.')"
+        answers:
+        - content: Para
+          correct: true
+        - content: Por
+        - content: "Don't know"
+      - group: q_7
+        prompt: "By way of, through, along"
+        answers:
+        - content: Para
+        - content: Por
+          correct: true
+        - content: "Don't know"
+      - group: q_8
+        prompt: "Future deadline or a certain time (English: ‘for’ or ‘by’ as in 'Turn it in by or for Monday')"
+        answers:
+        - content: Para
+          correct: true
+        - content: Por
+        - content: "Don't know"
+      - group: q_9
+        prompt: "Purpose (English: in order to + infinitive)"
+        answers:
+        - content: Para
+          correct: true
+        - content: Por
+        - content: "Don't know"
+      - group: q_10
+        prompt: "Passive voice (Engl. ‘by’ as in I was hugged by my mom)"
+        answers:
+        - content: Para
+        - content: Por
+          correct: true
+        - content: "Don't know"
+      - group: q_11
+        prompt: "(in exchange) for"
+        answers:
+        - content: Para
+        - content: Por
+          correct: true
+        - content: "Don't know"

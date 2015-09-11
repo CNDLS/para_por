@@ -64,7 +64,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 						$(radio_btns).each(function (i) {
 							if ($(this).is(":checked")) {
 								var input_is_correct = $(card.history).select(function () {
-									return ((this.data instanceof Game.Answer) && (this.data.correct));
+									return ((this.data instanceof Game.Round.Answer) && (this.data.correct));
 								})[0];
 								if (input_is_correct) {
 									input_is_correct = input_is_correct.data.correct;

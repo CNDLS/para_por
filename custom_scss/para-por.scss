@@ -8,6 +8,9 @@ h1 {
 #content {
   position: relative;
 }
+h1.introWelcome {
+    margin: 2em;
+}
 
 #game {
 	clear: both;
@@ -55,7 +58,7 @@ pre.scroll {
     width: 50vw;
     font-size: 1.6em;
     text-align: left;
-    margin: 15% auto 0;
+    margin: 18% auto 3%;
 }
 .backdrop.quiz .card.prompt.simple h1 {
   text-align: center;
@@ -63,9 +66,9 @@ pre.scroll {
 
 .backdrop.quiz ul {
   list-style: none;
-  margin: 0 auto;
-  width: 45em;
-  font-size: 1.45em;
+  margin: 0.25em auto;
+  width: 55vw;
+  font-size: 1.25vw;
   clear: both;
 }
 .backdrop.quiz ul.header li {
@@ -79,7 +82,7 @@ pre.scroll {
 }
 .backdrop.quiz ul li.prompt {
   text-align: left;
-  width: 25em;
+  width: 30vw;
   float: left;
 }
 
@@ -233,13 +236,14 @@ p.intro {
 }
 
 .submit_container {
-  margin: 6em auto 0;
-  width: 45em;
+  margin: 10em auto 0;
+  width: 53em;
 }
 
 .submit_container button {
   left: 5em;
   position: relative;
+  font-size: 1.25em;
 }
 
 /******************************************************************************
@@ -366,4 +370,30 @@ Sharks!
 	100% {
 		transform: rotate(360deg);
 	}
+}
+
+
+/******************************************************************************
+Quiz
+******************************************************************************/
+.multiple_choice_card input:after {
+  display: block;
+  width: 0.75em;
+  height: 0.75em;
+  content: " ";
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 0.5em;
+  margin-top: -0.5em;
+}
+.multiple_choice_card input.s:after {
+  background-image: url('../custom_img/smile.png');
+}
+.multiple_choice_card input.f:after {
+  background-image: url('../custom_img/frown.png');
+}
+
+.multiple_choice_card input.v {
+  -webkit-filter: sepia(1) hue-rotate(60deg) saturate(100);
+  filter: sepia(1) hue-rotate(60deg) saturate(100);
 }
