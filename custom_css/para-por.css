@@ -43,7 +43,7 @@ pre.scroll {
   height: 140em;
   position: absolute;
   background-color: aliceblue;
-  background: url("../custom_img/clipboard.svg");
+  background: url("../custom_img/clipboard.png");
   background-size: 70%;
   background-repeat: no-repeat;
   background-position: center top;
@@ -321,8 +321,8 @@ Quiz
   content: " ";
   background-size: contain;
   background-repeat: no-repeat;
-  margin-left: 0.5em;
-  margin-top: -0.5em; }
+  margin-left: 0.7em;
+  margin-top: -0.7em; }
 
 .multiple_choice_card input.s:after {
   background-image: url("../custom_img/smile.png"); }

@@ -146,7 +146,6 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		// if round.nbr === 17, start sharks swimming.
 		// testing on round.nbr === 2
 		if (round.nbr >= 17) {
-			
 			sharksAppear(round.nbr);
 		}
 
@@ -155,15 +154,24 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 			// clean up prompt.
 			round.prompter.discardAll();
 				
-			if (current_score < 18) {
+			if (current_score == 1) {
+        this.game.winning_score = 21; // reset, just in case.
+        
+      } else if (current_score < 18) {
 				// if final score < 18, you lose
 				add_gas_promise.then(playerDrivesBoat).then(boatSinks).then(playerSwimsBack).then(goBackToRoundOne);
 				info.continue = false;
 				
-			} else if (current_score < 20) {
+			} else if (current_score === 18) {
 				// give two bonus questions
 				add_gas_promise.then(goToBonusRounds);
 				info.continue = false;
+        				
+			} else if (current_score === 19) {
+				// give two bonus questions, but requitre that they are both answered correctly.
+				add_gas_promise.then(goToBonusRounds);
+				info.continue = false;
+        this.game.winning_score = 22;
 				
 			} else if (current_score === 20) { // condition is spurious at this point.
 				// must be a winner! got 20 right; straight through.
