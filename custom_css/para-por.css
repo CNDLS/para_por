@@ -43,7 +43,7 @@ pre.scroll {
   height: 140em;
   position: absolute;
   background-color: aliceblue;
-  background: url("../custom_img/clipboard.png");
+  background: url("../custom_img/clipboard.svg");
   background-size: 70%;
   background-repeat: no-repeat;
   background-position: center top;
