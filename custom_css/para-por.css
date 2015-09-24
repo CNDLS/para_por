@@ -177,7 +177,7 @@ svg#gauge {
 
 p.intro {
   font-size: 1.5em;
-  padding: 2.5em 3em;
+  padding: 2.5em 3em 1em;
   background: white;
   border: 2px solid transparent;
   border-radius: 0.5em;
