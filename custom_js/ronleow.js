@@ -15,6 +15,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		this.blackBackdrop = $("#blackBackdrop");
 		this.needle = $("svg path#needle");
 		this.gas_tank = $("#gas_tank");
+    this.bell = $("#bell").get(0);
 		this.last_regular_round_nbr = 20;
 		this.quiz_round_nbr = 24;
 		this.sharkcontainer1 = $("#sharkcontainer1");
@@ -216,6 +217,9 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 	addGas: function (fill_to) {
 		var current_transform, current_rotation, step;
 		var dfd = $.Deferred();
+    
+    // play a ding like a gas pump.
+    this.bell.play()
 		
 		// show the gas tank above the back end of the boat.
 		this.gas_tank.show();

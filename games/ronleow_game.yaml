@@ -13,6 +13,7 @@ Scenes:
     - svg#gauge[src=MEDIA_URL+custom_img/gauge.svg]
     - div#sharkcontainer1
     - div#sharkcontainer2
+    - audio#bell[src=MEDIA_URL+custom_snd/gas_pump_bell.mp3]
   - scene_type: Quiz
     rounds: [24]
 Widgets:
