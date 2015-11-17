@@ -194,7 +194,12 @@ p.intro {
 .card.prompt a {
   text-decoration: none;
   cursor: default;
-  padding: 0.25em; }
+  padding: 0.25em;
+  color: #237f81; }
+
+.card.prompt a:hover,
+.card.prompt a:active {
+  color: #da5a23; }
 
 .multiple_choice_card,
 .multiple_choice_card li input {
@@ -240,6 +245,7 @@ Swim animation
 @-webkit-keyframes swimBack {
   100% {
     left: 10%; } }
+
 /******************************************************************************
 Win animation
 ******************************************************************************/
@@ -310,15 +316,19 @@ Sharks!
 @-webkit-keyframes sharkswimleft {
   100% {
     transform: rotate(-360deg); } }
+
 @-moz-keyframes sharkswimleft {
   100% {
     transform: rotate(-360deg); } }
+
 @-webkit-keyframes sharkswimright {
   100% {
     transform: rotate(360deg); } }
+
 @-moz-keyframes sharkswimright {
   100% {
     transform: rotate(360deg); } }
+
 /******************************************************************************
 Quiz
 ******************************************************************************/
@@ -341,5 +351,3 @@ Quiz
 .multiple_choice_card input.v {
   -webkit-filter: sepia(1) hue-rotate(60deg) saturate(100);
   filter: sepia(1) hue-rotate(60deg) saturate(100); }
-
-/*# sourceMappingURL=para-por.css.map */

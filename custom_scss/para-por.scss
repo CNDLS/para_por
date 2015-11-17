@@ -216,9 +216,13 @@ p.intro {
   text-decoration: none;
   cursor: default;
   padding: 0.25em;
+  color: #237f81;
 }
 
-
+.card.prompt a:hover,
+.card.prompt a:active {
+  color: #da5a23;
+}
 
 .multiple_choice_card,
 .multiple_choice_card li input {
