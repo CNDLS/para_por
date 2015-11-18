@@ -40,6 +40,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 			}
 		})
 	},
+  
 	
 	enterListenForPlayer: function (evt, info) {
 		if (info.round.nbr === this.quiz_round_nbr) {
@@ -111,7 +112,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 
 		// bind animation functions to this object (may be used in callbacks).
 		var playerDrivesBoat = this.playerDrivesBoat.bind(this);
-		var goOneTwentiethForward = function () { return playerDrivesBoat(current_score); }
+    var playerDrivesBoatToCurrentScore = function () { return playerDrivesBoat(current_score); }
 		var boatSinks = this.boatSinks.bind(this);
 		var playerSwimsBack = this.playerSwimsBack.bind(this);
 		var celebrateAtFarShore = this.celebrateAtFarShore.bind(this);
@@ -131,7 +132,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 				break;
 				
 			case 1:
-				add_gas_promise = this.addGas().then(goOneTwentiethForward);
+				add_gas_promise = this.addGas();
 				info.continue = false;
 				break;
 		}	
@@ -152,7 +153,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
         
       } else if (current_score < 18) {
 				// if final score < 18, you lose
-				add_gas_promise.then(playerDrivesBoat).then(boatSinks).then(playerSwimsBack).then(goBackToRoundOne);
+        add_gas_promise.then(playerDrivesBoatToCurrentScore).then(boatSinks).then(playerSwimsBack).then(goBackToRoundOne);
 				info.continue = false;
 				
 			} else if (current_score === 18) {
@@ -169,7 +170,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 			} else if (current_score === 20) { // condition is spurious at this point.
 				// must be a winner! got 20 right; straight through.
 				game.user_won = true;
-				add_gas_promise.then(playerDrivesBoat).then(celebrateAtFarShore).then(goToQuiz);
+				add_gas_promise.then(playerDrivesBoatToCurrentScore).then(celebrateAtFarShore).then(goToQuiz);
 				info.continue = false;
 			}
 			
@@ -181,11 +182,12 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 			if (current_score >= 20) {
 				// player won!
 				game.user_won = true;
-				add_gas_promise.then(playerDrivesBoat).then(celebrateAtFarShore).then(goToQuiz);
+        current_score = 20;
+				add_gas_promise.then(playerDrivesBoatToCurrentScore).then(celebrateAtFarShore).then(goToQuiz);
 				info.continue = false;
 			} else {
 				// player lost.
-				add_gas_promise.then(playerDrivesBoat).then(boatSinks).then(playerSwimsBack).then(goBackToRoundOne);
+				add_gas_promise.then(playerDrivesBoatToCurrentScore).then(boatSinks).then(playerSwimsBack).then(goBackToRoundOne);
 				info.continue = false;
 			}
 			
@@ -195,11 +197,11 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 			return endGame();
 			
 		} else if (score == 1) {
-				// move the round forward once done.
-				add_gas_promise.then(function () {
-					round.transition();
-				})
-			}
+			// move the round forward once done.
+			add_gas_promise.then(playerDrivesBoatToCurrentScore).then(function () {
+				round.transition();
+			})
+		}
 	},
 	
 	/*** Utility Animations. 
@@ -269,7 +271,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 			_this.gas_tank.hide();
 			_this.game.setPoints(0);
 			_this.swimmer.remove();
-			_this.boatContainer.render("#boat");
+			_this.boat_container.render("#boat");
 			// cancel the current transition, abort from this round to the first one.
 			_this.game.current_round.transition.cancel();
 			_this.blackBackdrop.animate({ opacity: 0 }, 500, function () {
@@ -316,7 +318,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		var dfd = $.Deferred();
 		this.boat
 		.delay(500)
-		.animate({ "top": this.boatContainer.height() }, 3500, function () { dfd.resolve(); });
+		.animate({ "top": this.boat_container.height() }, 3500, function () { dfd.resolve(); });
 		return dfd.promise();
 	},
 
@@ -330,7 +332,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		// if there were no correct answers, boat_sink_pos.left is 37.5, and swim_duration is 750.
 		
 		this.boat.remove();
-		this.boatContainer.append(this.swimmer)
+		this.boat_container.append(this.swimmer)
 		this.swimmer.css({ left: boat_sink_pos.left, top: boat_sink_pos.top });
 		this.swimmer.show();
 		

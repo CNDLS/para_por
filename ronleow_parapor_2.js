@@ -6,20 +6,11 @@
 Game.Scene.new(Game.Scene.Basic, "Lake", 
 {
 	finalize: function (round) {
-		round.scene = this;
-		
-		// keep references to my set pieces.
-		this.swimmer = $("#swimmer");
-		this.boatContainer = $("#boat-container");
-		this.boat = $("#boat");
-		this.blackBackdrop = $("#blackBackdrop");
-		this.needle = $("svg path#needle");
-		this.gas_tank = $("#gas_tank");
     this.bell = $("#bell").get(0);
+    this.boat = $("#boat");
+    this.needle = $("svg path#needle");
 		this.last_regular_round_nbr = 20;
 		this.quiz_round_nbr = 24;
-		this.sharkcontainer1 = $("#sharkcontainer1");
-		this.sharkcontainer2 = $("#sharkcontainer2");
 		
 		// add a cheat key.
 		var _this = this;
@@ -48,7 +39,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 					break;
 			}
 		})
-	}
+	},
 	
 	enterListenForPlayer: function (evt, info) {
 		if (info.round.nbr === this.quiz_round_nbr) {
@@ -120,6 +111,7 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 
 		// bind animation functions to this object (may be used in callbacks).
 		var playerDrivesBoat = this.playerDrivesBoat.bind(this);
+		var goOneTwentiethForward = function () { return playerDrivesBoat(current_score); }
 		var boatSinks = this.boatSinks.bind(this);
 		var playerSwimsBack = this.playerSwimsBack.bind(this);
 		var celebrateAtFarShore = this.celebrateAtFarShore.bind(this);
@@ -222,7 +214,9 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
     this.bell.play()
 		
 		// show the gas tank above the back end of the boat.
-		this.gas_tank.show();
+    var boat_offset = this.boat.offset().left;
+    var gas_tank_width = this.gas_tank.width();
+		this.gas_tank.show().offset({ left: boat_offset - (gas_tank_width / 1.25) });
 		
 		// sometimes, we get errors related to the transform not matching. 
 		// try to capture them to figure out what is going on.
@@ -252,16 +246,11 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 				})
 		} catch (e) {
 			this.gas_tank.hide();
-			console.warn(e);
+      // console.warn(e);
+      throw(e)
 		}
 		return dfd.promise();
 	},
-  
-  goOneTwentiethForward: function () {
-		var dfd = $.Deferred();
-    dfd.resolve();
-    return dfd.promise();
-  }
 	
 	goToBonusRounds: function () {
 		var dfd = $.Deferred();
@@ -289,18 +278,17 @@ Game.Scene.new(Game.Scene.Basic, "Lake",
 		});
 	},
 	
-	playerDrivesBoat: function () {
+	playerDrivesBoat: function (to_step) {
 		this.gas_tank.hide(); // precaution.
 		var dfd = $.Deferred();
 		var boat_start_pos = this.boat.position().left;
 		var boat_nudge = this.boat.width() / 2.0;
-		var move_increment = (this.boatContainer.width() - this.boat.width()) / 20;
-		var boat_trip_length = Math.min(this.game.current_score, 20);
+		var move_increment = (this.boat_container.width() - this.boat.width()) / 20;
+		var boat_trip_length = to_step || Math.min(this.game.current_score, 20);
 		var boat_end_pos = (boat_trip_length) ? (move_increment * boat_trip_length) : boat_nudge;
-		var boat_speed = move_increment * 20;
+		var boat_speed = to_step ? move_increment : move_increment * 20;
 		var boat_min_duration = 400; // ticks
 		var boat_run_duration = (boat_speed * boat_trip_length) + boat_min_duration;
-		
 		this.boat
 		.delay(500)
 		.animate({ "left": boat_end_pos }, boat_run_duration, function () { dfd.resolve(); });

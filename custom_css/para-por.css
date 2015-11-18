@@ -5,11 +5,18 @@ body {
 h1 {
   font-size: 2.6vw; }
 
+#top {
+  margin: 4.5em 0 0.5em 4em;
+  font-size: 1.25em; }
+
 #content {
   position: relative; }
 
 h1.introWelcome {
   margin: 2em; }
+
+#widgets > div.widget.scoreboard {
+  background-color: #499c9e; }
 
 #game {
   clear: both;
